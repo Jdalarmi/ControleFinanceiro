@@ -63,7 +63,6 @@ def percentual():
     l_percentagem = Label(frameMeio, text='{:,.2f}%'.format(valor),anchor=NW, font=('Verdana 12'), bg=co1, fg=co4)
     l_percentagem.place(x=200, y=35)
 
-
 #Graficos bar 
 
 def grafico_bar():
@@ -155,11 +154,67 @@ def grafico_pie():
     canva_categoria = FigureCanvasTkAgg(figura, frame_gra_pie)
     canva_categoria.get_tk_widget().grid(row=0, column=0)
 
+
+
 percentual()
 grafico_bar()
 resumo()
 grafico_pie()
 
+
+#Criando frames dentro do FRAME BAIXO
+frame_renda = Frame(frameBaixo, width=300, height=250, bg=co1)
+frame_renda.grid(row=0, column=0)
+
+frame_operacoes = Frame(frameBaixo, width=220, height=250, bg=co1)
+frame_operacoes.grid(row=0, column=1,padx=5)
+
+frame_configuracao = Frame(frameBaixo, width=300, height=250, bg=co1)
+frame_configuracao.grid(row=0, column=2, padx=5)
+
+
+#TABELA RENDA MENSAL:
+app_tabela = Label(frameMeio, text=" TABELA DE RECEITAS DE DESPESAS ", anchor=NW, font=('Verdana 12'), bg=co1, fg=co4)
+app_tabela.place(x=5, y=309)
+
+#FUNCAO QUE MOSTRA TABELA
+def mostrar_renda():
+
+    # creating a treeview with dual scrollbars
+    tabela_head = ['#Id','Categoria','Data','Quantia']
+
+    lista_itens = [[0,2,3,4],[0,2,3,4],[0,2,3,4],[0,2,3,4]]
+    
+    global tree
+
+    tree = ttk.Treeview(frame_renda, selectmode="extended",columns=tabela_head, show="headings")
+    # vertical scrollbar
+    vsb = ttk.Scrollbar(frame_renda, orient="vertical", command=tree.yview)
+    # horizontal scrollbar
+    hsb = ttk.Scrollbar(frame_renda, orient="horizontal", command=tree.xview)
+
+    tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+    tree.grid(column=0, row=0, sticky='nsew')
+    vsb.grid(column=1, row=0, sticky='ns')
+    hsb.grid(column=0, row=1, sticky='ew')
+
+    hd=["center","center","center", "center"]
+    h=[30,100,100,100]
+    n=0
+
+    for col in tabela_head:
+        tree.heading(col, text=col.title(), anchor=CENTER)
+        # adjust the column's width to the header string
+        tree.column(col, width=h[n],anchor=hd[n])
+        
+        n+=1
+
+    for item in lista_itens:
+        tree.insert('', 'end', values=item)
+
+
+mostrar_renda()
 janela.mainloop()
 
 
