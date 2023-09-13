@@ -11,6 +11,9 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 
+#Tkcalendar
+from tkcalendar import Calendar, DateEntry
+from datetime import date
 
 #Janela vazia
 
@@ -181,7 +184,7 @@ app_tabela.place(x=5, y=309)
 def mostrar_renda():
 
     # creating a treeview with dual scrollbars
-    tabela_head = ['#Id','Categoria','Data','Quantia']
+    tabela_head = ['#Id','Categoria','Data','Quantidade']
 
     lista_itens = [[0,2,3,4],[0,2,3,4],[0,2,3,4],[0,2,3,4]]
     
@@ -215,6 +218,43 @@ def mostrar_renda():
 
 
 mostrar_renda()
+#Despesa
+l_info = Label(frame_operacoes, text='Insira novas Despesas', height=1, anchor=NW, font=('Verdana 10 bold'), bg=co1, fg=co4)
+l_info.place(x=10, y=10)
+#Categoria
+l_categoria = Label(frame_operacoes, text='Categoria', height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_categoria.place(x=10, y=40)
+
+categoria_funcao = ['Viagem', 'Comida']
+categoria = []
+
+for i in categoria_funcao:
+    categoria.append(i[1])
+
+combo_categoria_despesa = ttk.Combobox(frame_operacoes, width=10, font=('Ivy 10'))
+combo_categoria_despesa['values'] = (categoria)
+combo_categoria_despesa.place(x=110, y=41)
+
+# Data 
+l_cal_despesas = Label(frame_operacoes, text='Data', height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_cal_despesas.place(x=10, y=70)
+e_cal_despesa = DateEntry(frame_operacoes, width=12, background= 'darkblue', foreground='white', borderwidth=2, year=2022)
+e_cal_despesa.place(x=110, y=71)
+
+# Adicona valor 
+l_valor_despesas = Label(frame_operacoes, text='Quantia Total', height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_valor_despesas.place(x=10, y=100)
+e_valor_despesas = Entry(frame_operacoes, width=14, justify='left', relief='solid')
+e_valor_despesas.place(x=110, y=101)
+
+#Botão inserir 
+img_add_despesas = Image.open('images.png')
+img_add_despesas = img_add_despesas.resize((17,17))
+img_add_despesas = ImageTk.PhotoImage(img_add_despesas)
+
+botao_inserir_despesas = Button(frame_operacoes, image=img_add_despesas, text="Adicionar", width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_inserir_despesas.place(x=110, y=131)
+
 janela.mainloop()
 
 
