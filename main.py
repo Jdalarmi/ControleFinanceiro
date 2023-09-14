@@ -109,6 +109,70 @@ def inserir_receitas_bd():
     resumo()
     grafico_pie()
 
+#Função inserir no Banco de dados os valores de despesas:
+def inserir_receitas_bd():
+    nome = combo_categoria_despesa.get()
+    data = e_cal_despesa.get()
+    quantia = e_valor_despesas.get()
+
+    lista_inserir = [nome, data, quantia]
+
+    for i in lista_inserir:
+        if i == '':
+            messagebox.showerror('Erro', 'Preencha todos os campos')
+            return
+    #Funcao de inserir da view
+    inserir_gastos(lista_inserir)
+
+    messagebox.showinfo('Sucesso', 'Dados inseridos com sucesso!')
+    
+    combo_categoria_despesa.delete(0, 'end')
+    e_cal_despesa.delete(0,'end')
+    e_valor_despesas.delete(0, 'end')
+
+    #Atualizando dados 
+    mostrar_renda()
+    percentual()
+    grafico_bar()
+    resumo()
+    grafico_pie()
+
+# FUNÇÃO DELETAR DO BANCO DE DADOS:
+def deletar_dados():
+    try:
+        treev_dados = tree.focus()
+        treev_dicionario = tree.item(treev_dados)
+        treev_lista = treev_dicionario['values']
+        valor = treev_lista[0]
+        nome = treev_lista[1]
+
+        if nome == 'Receita':
+            deletar_receita([valor])
+            messagebox.showinfo('Sucesso', 'Os dados foram deletados com sucesso!')
+            
+            #Atualizando dados 
+            mostrar_renda()
+            percentual()
+            grafico_bar()
+            resumo()
+            grafico_pie()
+
+        else:
+            deletar_gastos([valor])
+            messagebox.showinfo('Sucesso', 'Os dados foram deletados com sucesso!')
+            
+            #Atualizando dados 
+            mostrar_renda()
+            percentual()
+            grafico_bar()
+            resumo()
+            grafico_pie()
+
+    except IndexError:
+        messagebox.showerror('Erro', 'Selecione um dos dados na tabela')
+      
+
+
 #Percentual 
 def percentual():
     l_nome = Label(frameMeio, text='Gasto Mensal', height=1,anchor=NW, font=('Verdana 12'), bg=co1, fg=co4)
@@ -248,8 +312,7 @@ def mostrar_renda():
     # creating a treeview with dual scrollbars
     tabela_head = ['#Id','Categoria','Data','Quantidade']
 
-    lista_itens = [[0,2,3,4],[0,2,3,4],[0,2,3,4],[0,2,3,4]]
-    
+    lista_itens = tabela()
     global tree
 
     tree = ttk.Treeview(frame_renda, selectmode="extended",columns=tabela_head, show="headings")
@@ -288,7 +351,7 @@ l_info.place(x=10, y=10)
 l_categoria = Label(frame_operacoes, text='Categoria', height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_categoria.place(x=10, y=40)
 
-categoria_funcao = ['Viagem', 'Comida']
+categoria_funcao = ver_categoria()
 categoria = []
 
 for i in categoria_funcao:
@@ -314,7 +377,7 @@ e_valor_despesas.place(x=110, y=101)
 img_add_despesas = Image.open('images.png')
 img_add_despesas = img_add_despesas.resize((17,17))
 img_add_despesas = ImageTk.PhotoImage(img_add_despesas)
-botao_inserir_despesas = Button(frame_operacoes, image=img_add_despesas, text="Adicionar:", width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_inserir_despesas = Button(frame_operacoes, image=img_add_despesas, text="Adicionar:",command=inserir_receitas_bd, width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
 botao_inserir_despesas.place(x=110, y=131)
 
 #Botão excluir
@@ -323,7 +386,7 @@ l_excluir_categoria.place(x=10, y=190)
 img_delete = Image.open('delete.png')
 img_delete = img_delete.resize((17,17))
 img_delete = ImageTk.PhotoImage(img_delete)
-botao_deletar = Button(frame_operacoes, image=img_delete, text="Deletar:", width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_deletar = Button(frame_operacoes,command=deletar_dados, image=img_delete, text="Deletar:", width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
 botao_deletar.place(x=110, y=190)
 
 
