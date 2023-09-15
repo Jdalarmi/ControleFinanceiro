@@ -1,4 +1,5 @@
 import sqlite3 as lite
+import pandas as pd
 
 con = lite.connect('dados.db')
 #Funcoes de inserção
@@ -92,3 +93,65 @@ def bar_valores():
 
     for i in receitas:
         receitas_lista.append(i[3])
+
+    receita_total = sum(receitas_lista)
+
+
+    #Receita total
+    receitas = ver_gastos()
+    despesa_lista = []
+
+    for i in receitas:
+        despesa_lista.append(i[3])
+
+    despesas_total = sum(despesa_lista)
+
+    #Despesa total
+    saldo_total = receita_total - despesas_total
+
+        
+    return [receita_total, despesas_total, saldo_total]
+
+def pie_valores():
+    gastos = ver_gastos()
+
+    tabela_lista = []
+
+    for i in gastos:
+        tabela_lista.append(i)
+
+    dataframe = pd.DataFrame(tabela_lista, columns=['id', 'categoria', 'Data', 'valor' ])
+    dataframe = dataframe.groupby('categoria')['valor'].sum()
+
+    lista_quantias = dataframe.values.tolist()
+    lista_categoria = []
+
+    for i in dataframe.index:
+        lista_categoria.append(i)
+
+    return ([lista_categoria, lista_quantias])
+
+#Percentual da barra 
+def percentagem_valor():
+    receitas = ver_receitas()
+    receitas_lista = []
+
+    for i in receitas:
+        receitas_lista.append(i[3])
+
+    receita_total = sum(receitas_lista)
+
+
+    #Receita total
+    receitas = ver_gastos()
+    despesa_lista = []
+
+    for i in receitas:
+        despesa_lista.append(i[3])
+
+    despesas_total = sum(despesa_lista)
+
+    # % total 
+    total = ((receita_total - despesas_total) / receita_total) * 100
+
+    return [total]

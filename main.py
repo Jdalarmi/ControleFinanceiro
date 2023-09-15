@@ -110,7 +110,7 @@ def inserir_receitas_bd():
     grafico_pie()
 
 #Função inserir no Banco de dados os valores de despesas:
-def inserir_receitas_bd():
+def inserir_depesas_bd():
     nome = combo_categoria_despesa.get()
     data = e_cal_despesa.get()
     quantia = e_valor_despesas.get()
@@ -185,9 +185,10 @@ def percentual():
 
     bar = Progressbar(frameMeio, length=180, style='black.Horizontal.TProgressbar')
     bar.place(x=10, y=35)
-    bar['value'] = 50
+    bar['value'] = percentagem_valor()[0]
 
-    valor = 50
+    valor = float(percentagem_valor()[0])
+
 
     l_percentagem = Label(frameMeio, text='{:,.2f}%'.format(valor),anchor=NW, font=('Verdana 12'), bg=co1, fg=co4)
     l_percentagem.place(x=200, y=35)
@@ -196,7 +197,7 @@ def percentual():
 
 def grafico_bar():
     lista_categorias = ['Renda', 'Despesas', 'Saldo']
-    lista_valores = [3000, 2000, 6320]
+    lista_valores = bar_valores()
 
     #Fazer figuras e atribir objetos
     figura = plt.Figure(figsize=(4, 3.45), dpi=60)
@@ -236,7 +237,7 @@ def grafico_bar():
 # Função de resumo total
 
 def resumo():
-    valor = [500, 600, 420]
+    valor = bar_valores()
 
 # PRIMEIRO FRAME DE VALOR DE CIMA 
     l_linha = Label(frameMeio, text='', width=215, height=1, anchor=NW, font=('Arial 1'), bg='#545454')
@@ -268,8 +269,8 @@ def grafico_pie():
     figura = plt.Figure(figsize=(5, 3), dpi=90)
     ax = figura.add_subplot(111)
 
-    lista_valores = [345,225,534]
-    lista_categorias = ['Renda', 'Despesa', 'Saldo']
+    lista_valores = pie_valores()[1]
+    lista_categorias = pie_valores()[0]
 
     # only "explode" the 2nd slice (i.e. 'Hogs')
 
@@ -364,7 +365,7 @@ combo_categoria_despesa.place(x=110, y=41)
 # Data 
 l_cal_despesas = Label(frame_operacoes, text='Data', height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_cal_despesas.place(x=10, y=70)
-e_cal_despesa = DateEntry(frame_operacoes, width=12, background= 'darkblue', foreground='white', borderwidth=2, year=2022)
+e_cal_despesa = DateEntry(frame_operacoes, width=12, background= 'darkblue', foreground='white', borderwidth=2, year=2023)
 e_cal_despesa.place(x=110, y=71)
 
 # Adicona valor 
@@ -377,7 +378,7 @@ e_valor_despesas.place(x=110, y=101)
 img_add_despesas = Image.open('images.png')
 img_add_despesas = img_add_despesas.resize((17,17))
 img_add_despesas = ImageTk.PhotoImage(img_add_despesas)
-botao_inserir_despesas = Button(frame_operacoes, image=img_add_despesas, text="Adicionar:",command=inserir_receitas_bd, width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
+botao_inserir_despesas = Button(frame_operacoes, image=img_add_despesas, text="Adicionar:",command=inserir_depesas_bd, width=80, compound=LEFT, anchor=NW, font=('Ivy 7 bold'), bg=co1, fg=co0, overrelief=RIDGE)
 botao_inserir_despesas.place(x=110, y=131)
 
 #Botão excluir
