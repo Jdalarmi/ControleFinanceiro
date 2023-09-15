@@ -151,7 +151,10 @@ def percentagem_valor():
 
     despesas_total = sum(despesa_lista)
 
-    # % total 
-    total = ((receita_total - despesas_total) / receita_total) * 100
+    if receita_total != 0:
+        total = ((receita_total - despesas_total) / receita_total) * 100
+    else:
+        total = 0
 
+        
     return [total]
