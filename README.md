@@ -20,6 +20,9 @@ Clone ou faça o download deste repositório em seu computador.
 Certifique-se de que os requisitos listados acima estão instalados.
 
 Execute o arquivo main.py para iniciar a aplicação.
+## Para utilizar no seu sistema operacional windowns como aplicativo você pode baixar o arquivo ZIP disponivel no link abaixo e rodar main.exe
+
+[Build] [https://drive.google.com/file/d/1taAu_YwgiXOHcepIxvTULHhFyoXsctRU/view?usp=drive_link]
 
 Funcionalidades Principais
 Inserir Categorias: Os usuários podem adicionar novas categorias financeiras para classificar suas receitas e despesas.
