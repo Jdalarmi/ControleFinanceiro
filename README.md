@@ -1,1 +1,3 @@
-- Aplicação para controle de finanças para orçamento de um a casa.
+- Aplicação para controle de finanças para orçamento de uma a casa ou pessoal.
+- Tecnologias aplicadas no projeto.
+- Python (Matplotlib, pandas, Banco de dados)
